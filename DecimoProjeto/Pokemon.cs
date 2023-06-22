@@ -1,23 +1,18 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace DecimoProjeto
 { 
     class Pokemon
     {
-        //public int id;
+        public int Id;
         public string Nome;
         public string Tipo;
         public double Altura;
         public double Peso;
 
-        //public Pokemon(string nome, string tipo, double altura, double peso)
-        //{
-        //    Nome = nome;
-        //    Tipo = tipo;
-        //    Altura = altura;
-        //    Peso = peso;
-        //}
+        private Pokemon[] pokeVet;
         public Pokemon()
         {
             if (Nome == null)
@@ -113,6 +108,114 @@ namespace DecimoProjeto
                     break;
                 }else if ((option == "N") || (option == "C")) { break; }
             }
+        }
+
+        public void AddListaPoke()
+        {
+            Console.WriteLine("Quantos pokémons deseja adicionar?");
+            int qtdP = int.Parse(Console.ReadLine());
+            pokeVet = new Pokemon[qtdP];
+
+            for (int i = 0; i < qtdP; i++)
+            {
+                int id = i + 1;
+                Console.WriteLine("Quem é este pokémon?:");
+                string nome = Console.ReadLine();
+                Console.WriteLine($"Qual o tipo de {nome}?");
+                string tipo = Console.ReadLine();
+                Console.WriteLine($"Um novo pokémon do tipo {tipo}? Interessante...\nQual a altura de {nome}?");
+                double altura = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                Console.WriteLine($"Parece fazer sentido! E qual o peso de {nome}?");
+                double peso = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                Console.WriteLine($"Muito bem! Vamos adicionar o pokémon do tipo {tipo}, {nome} à PokeWiki!");
+                pokeVet[i] = new Pokemon() { Id = id, Nome = nome, Tipo = tipo, Altura = altura, Peso = peso};
+            }
+
+            Console.WriteLine("Todos os pokémons foram adicionados!");
+        }
+
+        public void SeeListaPoke()
+        {
+            if ((pokeVet.Length <= 0) || pokeVet.Length == null) { Console.WriteLine("Nenhum pokémon adicionado!"); }
+            else
+            {
+                Console.WriteLine("----------PokeWiki Database----------");
+                for (int i = 0; i < pokeVet.Length; i++)
+                {
+                    Console.WriteLine($"ID: {pokeVet[i].Id}");
+                    Console.WriteLine($"Nome: {pokeVet[i].Nome}");
+                    Console.WriteLine($"Tipo: {pokeVet[i].Tipo}");
+                    Console.WriteLine($"Altura: {pokeVet[i].Altura}m");
+                    Console.WriteLine($"Peso: {pokeVet[i].Peso}kg");
+                    Console.WriteLine("-------------------------------------");
+                }
+            }
+            
+        }
+
+        public void AttListaPoke()
+        {
+            Console.WriteLine("----------PokeWiki Database----------");
+            for (int i = 0; i < pokeVet.Length; i++)
+            {
+                Console.WriteLine($"ID: {pokeVet[i].Id}");
+                Console.WriteLine($"Nome: {pokeVet[i].Nome}");
+                Console.WriteLine($"Tipo: {pokeVet[i].Tipo}");
+                Console.WriteLine($"Altura: {pokeVet[i].Altura}m");
+                Console.WriteLine($"Peso: {pokeVet[i].Peso}kg");
+                Console.WriteLine("-------------------------------------");
+            }
+            Console.WriteLine("Selecione o ID do pokémon que queres atualizar");
+            int n = int.Parse(Console.ReadLine());
+            for (int i = 0; i <= n; i++)
+            {
+                string option = "";
+                if (i == n)
+                {
+                    i--;
+                    while ((option != "N") || (option != "T") || (option != "A") || (option != "P") || (option != "C"))
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"Qual dos dados abaixos de {pokeVet[i].Nome} desejas atualizar?");
+                        Console.WriteLine("-------------------------------------");
+                        Console.WriteLine($"ID: {pokeVet[i].Id}");
+                        Console.WriteLine($"(N) - Nome: {pokeVet[i].Nome}");
+                        Console.WriteLine($"(T) - Tipo: {pokeVet[i].Tipo}");
+                        Console.WriteLine($"(A) - Altura: {pokeVet[i].Altura}m");
+                        Console.WriteLine($"(P) - Peso: {pokeVet[i].Peso}kg");
+                        Console.WriteLine("(C) - Cancelar");
+                        Console.WriteLine("-------------------------------------");
+                        option = Console.ReadLine().ToUpper();
+                        if (option == "N")
+                        {
+                            Console.WriteLine($"Como {pokeVet[i].Nome} passará a se chamar?");
+                            pokeVet[i].Nome = Console.ReadLine();
+                            option = "";
+                        }else if (option == "T")
+                        {
+                            Console.WriteLine($"Qual será a tipagem que substituirá o tipo {pokeVet[i].Tipo} de {pokeVet[i].Nome}?");
+                            pokeVet[i].Tipo = Console.ReadLine();
+                        }
+                        else if (option == "A")
+                        {
+                            Console.WriteLine($"Qual será a nova altura de {pokeVet[i].Nome}?");
+                            pokeVet[i].Altura = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                        }
+                        else if (option == "P")
+                        {
+                            Console.WriteLine($"Qual será a nova altura de {pokeVet[i].Nome}?");
+                            pokeVet[i].Peso = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                        }
+                        else if (option == "C")
+                        {
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+            }
+            
         }
         public override string ToString()
         {
