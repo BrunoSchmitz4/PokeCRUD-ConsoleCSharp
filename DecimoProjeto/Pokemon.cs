@@ -17,11 +17,11 @@ namespace DecimoProjeto
         {
             if (Nome == null)
             {
-                Nome = "???";
+                Nome = "?????";
             }
             if (Tipo == null)
             {
-                Tipo = "???";
+                Tipo = "?????";
             }
         }
         public void ShowPoke()
